@@ -8,7 +8,7 @@ char **bunchwords(void)
 	char *tmp = NULL;
 	ssize_t nread;
 	int i, j = 0;
-	
+
 	while (1)
 	{
 		i = 0;
@@ -33,7 +33,7 @@ char **bunchwords(void)
 		tmp = strtok(str, " ");
 		arstr = malloc(sizeof(char *) * j);
 		if (!arstr)
-			return(NULL);
+			return (NULL);
 		while (tmp != NULL)
 		{
 			arstr[i] = tmp;
@@ -47,14 +47,27 @@ char **bunchwords(void)
 
 int main(void)
 {
-	char **wordstr = bunchwords();
-	int i = 0;
-
-	while (wordstr[i] != NULL)
+	int status;
+	
+	while (1)
 	{
-		printf("%s \n", wordstr[i]);
-		i++;
-	}
+		pid_t pid;
+		char **wordstr = bunchwords();
 
-	return (0);
+		pid = fork();
+		if (wordstr == NULL)
+			break;
+		if (pid == -1)
+		{
+			perror("Error: ");
+			return (1);
+		}
+		wait(&status);
+		if (pid == 0)
+		{
+			execve(wordstr[0], wordstr, NULL);
+			perror("Error");
+		}
+	}
+	return (-1);
 }
