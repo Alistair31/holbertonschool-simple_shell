@@ -1,92 +1,62 @@
 #include "man.h"
 
-char **split_words(char *str)
+/**
+ * command - executes a command
+ * @args: array of arguments
+ *
+ * Return: void
+ */
+void command(char **args)
 {
-	char **arstr = NULL;
-	char *tmp = NULL;
-	int i, j = 0, words = 0;
+	pid_t pid = fork();
+	int status, i;
 
-	for (i = 0; str[i]; i++)
+	if (pid == -1)
 	{
-		if (str[i] == ' ')
-			words++;
+		perror("Error: ");
+		for (i = 0; args[i]; i++)
+			free(args[i]);
+		free(args);
+		return;
 	}
 
-	arstr = malloc(sizeof(char *) * (words + 2));
-	if (!arstr)
-		return (NULL);
-
-	tmp = strtok(str, " ");
-	while (tmp)
+	if (pid == 0)
 	{
-		arstr[j++] = strdup(tmp);
-		tmp = strtok(NULL, " ");
+		execve(args[0], args, NULL);
+		perror("Error");
+		exit(1);
 	}
-	arstr[j] = NULL;
-
-	return (arstr);
+	else
+	{
+		wait(&status);
+		for (i = 0; args[i]; i++)
+			free(args[i]);
+		free(args);
+	}
 }
-
-char **bunchwords(void)
-{
-	size_t line = 0;
-	char *str = NULL;
-	ssize_t nread;
-	char **args;
-
-	printf("$ ");
-	nread = getline(&str, &line, stdin);
-
-	if (nread == -1)
-	{
-		free(str);
-		return (NULL);
-	}
-
-	if (str[nread - 1] == '\n')
-		str[nread - 1] = '\0';
-
-	args = split_words(str);
-	free(str);
-	return (args);
-}
-
+/**
+ * main - entry point for the simple shell
+ *
+ * Return: 0 on success
+ */
 int main(void)
 {
-	int status, i;
+	int interactive = isatty(STDIN_FILENO);
 
 	while (1)
 	{
-		pid_t pid;
-		char **wordstr = bunchwords();
+		char **wordstr = bunchwords(interactive);
 
 		if (wordstr == NULL)
 			break;
 
-		pid = fork();
-
-		if (pid == -1)
+		if (wordstr[0] == NULL)
 		{
-			perror("Error: ");
-			for (i = 0; wordstr[i]; i++)
-				free(wordstr[i]);
 			free(wordstr);
 			continue;
 		}
 
-		if (pid == 0)
-		{
-			execve(wordstr[0], wordstr, NULL);
-			perror("Error");
-			exit(1);
-		}
-		else
-		{
-			wait(&status);
-			for (i = 0; wordstr[i]; i++)
-				free(wordstr[i]);
-			free(wordstr);
-		}
+		command(wordstr);
 	}
 	return (0);
 }
