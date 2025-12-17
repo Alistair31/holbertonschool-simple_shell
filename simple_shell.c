@@ -4,11 +4,11 @@ char **split_words(char *str)
 {
 	char **arstr = NULL;
 	char *tmp = NULL;
-	int i = 0, words = 0;
+	int i, words = 0;
 
-	for (int j = 0; str[j]; j++)
+	for (i = 0; str[i]; i++)
 	{
-		if (str[j] == ' ')
+		if (str[i] == ' ')
 			words++;
 	}
 
