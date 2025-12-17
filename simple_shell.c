@@ -3,7 +3,7 @@
 /**
  * command - executes a command
  * @args: array of arguments
- * 
+ *
  * Return: void
  */
 void command(char **args)
