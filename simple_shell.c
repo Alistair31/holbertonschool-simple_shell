@@ -12,15 +12,14 @@ void command(char **args)
 	int status, i, j = 0;
 
 	while (args[j])
-	{
-		if (strcmp(args[j], "exit") == 0)
-		{
-			for (i = 0; args[i]; i++)
-				free(args[i]);
-			free(args);
-			exit(2);
-		}
 		j++;
+
+	if (strcmp(args[0], "exit") == 0)
+	{
+		for (i = 0; args[i]; i++)
+			free(args[i]);
+		free(args);
+		exit(0);
 	}
 
 	pid = fork();
@@ -38,6 +37,8 @@ void command(char **args)
 	{
 		execve(args[0], args, NULL);
 		perror("Error");
+		if (strcmp(args[j - 1], "exit") == 0)
+			exit(2);
 		exit(1);
 	}
 	else
