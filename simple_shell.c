@@ -8,8 +8,24 @@
  */
 void command(char **args)
 {
-	pid_t pid = fork();
-	int status, i;
+	pid_t pid;
+	int status, i, j = 0;
+
+	for (i = 0; args[i] ; i++)
+			if (strcmp(args[i], "exit") == 0)
+			{
+				while (args[j])
+				{
+					free(args[j]);
+					j++;
+				}
+				free(args);
+				fprintf(stderr, "%s\n", "Error");
+				exit(2);
+			}
+
+
+	pid = fork();
 
 	if (pid == -1)
 	{
@@ -50,13 +66,6 @@ int main(void)
 		if (wordstr == NULL)
 		{
 			printf("\n");
-			break;
-		}
-
-		if (strcmp(wordstr[0], "exit") == 0)
-		{
-			free(wordstr[0]);
-			free(wordstr);
 			break;
 		}
 
