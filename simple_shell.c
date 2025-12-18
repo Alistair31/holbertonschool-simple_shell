@@ -13,13 +13,16 @@ void command(char **args)
 
 	if (strcmp(args[0], "exit") == 0)
 	{
+		if (args[1])
+		{
+			for (i = 0; args[i]; i++)
+				free(args[i]);
+			free(args);
+			exit(2);
+		}
 		for (i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);
-		if (args[1])
-		{
-			exit(2);
-		}
 		exit(0);
 	}
 
@@ -73,8 +76,7 @@ int main(void)
 			continue;
 		}
 
-		if command (wordstr)
-			;
+		command(wordstr);
 	}
 	return (0);
 }
