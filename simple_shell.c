@@ -54,8 +54,11 @@ int main(void)
 		}
 
 		if (strcmp(wordstr[0], "exit") == 0)
+		{
+			free(wordstr);
 			break;
-
+		}
+		
 		if (wordstr[0] == NULL)
 		{
 			free(wordstr);
