@@ -48,6 +48,12 @@ int main(void)
 		char **wordstr = bunchwords(interactive);
 
 		if (wordstr == NULL)
+		{
+			printf("\n");
+			break;
+		}
+
+		if (strcmp(wordstr[0], "exit") == 0)
 			break;
 
 		if (wordstr[0] == NULL)
