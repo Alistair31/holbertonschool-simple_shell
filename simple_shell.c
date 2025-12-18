@@ -18,7 +18,7 @@ void command(char **args)
 			for (i = 0; args[i]; i++)
 				free(args[i]);
 			free(args);
-			exit(0);
+			exit(2);
 		}
 		j++;
 	}
