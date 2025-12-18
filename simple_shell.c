@@ -16,7 +16,11 @@ void command(char **args)
 		for (i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);
-		exit(2);
+		if (args[1])
+		{
+			exit(2);
+		}
+		exit(0);
 	}
 
 	pid = fork();
@@ -69,7 +73,8 @@ int main(void)
 			continue;
 		}
 
-		command(wordstr);
+		if command (wordstr)
+			;
 	}
 	return (0);
 }
