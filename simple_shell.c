@@ -15,13 +15,6 @@ void command(char **args)
 	{
 		if (strcmp(args[j], "exit") == 0)
 		{
-			if (args[j + 1])
-			{
-				for (i = 0; args[i]; i++)
-					free(args[i]);
-				free(args);
-				exit(2);
-			}
 			for (i = 0; args[i]; i++)
 				free(args[i]);
 			free(args);
