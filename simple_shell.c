@@ -9,20 +9,15 @@
 void command(char **args)
 {
 	pid_t pid;
-	int status, i, j = 0;
+	int status, i;
 
-	for (i = 0; args[i]; i++)
-		if (strcmp(args[i], "exit") == 0)
-		{
-			while (args[j])
-			{
-				free(args[j]);
-				j++;
-			}
-			free(args);
-			fprintf(stderr, "%s\n", "Error");
-			exit(2);
-		}
+	if (strcmp(args[0], "exit") == 0)
+	{
+		for (i = 0; args[i]; i++)
+			free(args[i]);
+		free(args);
+		exit(2);
+	}
 
 	pid = fork();
 
@@ -61,7 +56,6 @@ int main(void)
 	while (1)
 	{
 		char **wordstr = bunchwords(interactive);
-		int i = 0;
 
 		if (wordstr == NULL)
 		{
@@ -73,17 +67,6 @@ int main(void)
 		{
 			free(wordstr);
 			continue;
-		}
-		
-		if (strcmp(wordstr[0], "exit") == 0)
-		{
-			while(wordstr[i])
-			{
-				free(wordstr[i]);
-				i++;
-			}
-			free(wordstr);
-			break;
 		}
 
 		command(wordstr);
