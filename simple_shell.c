@@ -9,21 +9,25 @@
 void command(char **args)
 {
 	pid_t pid;
-	int status, i;
+	int status, i, j = 0;
 
-	if (strcmp(args[0], "exit") == 0)
+	while (args[j])
 	{
-		if (args[1])
+		if (strcmp(args[j], "exit") == 0)
 		{
+			if (args[j + 1])
+			{
+				for (i = 0; args[i]; i++)
+					free(args[i]);
+				free(args);
+				exit(2);
+			}
 			for (i = 0; args[i]; i++)
 				free(args[i]);
 			free(args);
-			exit(2);
+			exit(0);
 		}
-		for (i = 0; args[i]; i++)
-			free(args[i]);
-		free(args);
-		exit(0);
+		j++;
 	}
 
 	pid = fork();
