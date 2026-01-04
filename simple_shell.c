@@ -23,9 +23,17 @@ void command(char **args)
 			fprintf(stderr, "%s\n", "Error");
 			exit(2);
 		}
+	char *spath = shellpath(args[0]);
 
+	if (spath == NULL)
+	{
+		perror("command not found");
+		for (i = 0; args[i]; i++)
+			free(args[i]);
+		free(args);
+		return;
+	}
 	pid = fork();
-
 	if (pid == -1)
 	{
 		perror("Error: ");
@@ -34,16 +42,16 @@ void command(char **args)
 		free(args);
 		return;
 	}
-
 	if (pid == 0)
 	{
-		execve(args[0], args, NULL);
+		execve(spath, args, NULL);
 		perror("Error");
 		exit(1);
 	}
 	else
 	{
 		wait(&status);
+		free(spath);
 		for (i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);
@@ -74,10 +82,9 @@ int main(void)
 			free(wordstr);
 			continue;
 		}
-		
 		if (strcmp(wordstr[0], "exit") == 0)
 		{
-			while(wordstr[i])
+			while (wordstr[i])
 			{
 				free(wordstr[i]);
 				i++;
