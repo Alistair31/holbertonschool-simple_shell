@@ -11,19 +11,29 @@ void command(char **args)
 	pid_t pid;
 	int status, i, j = 0;
 
-	while (args[j])
-		j++;
+	for (i = 0; args[i]; i++)
+		if (strcmp(args[i], "exit") == 0)
+		{
+			while (args[j])
+			{
+				free(args[j]);
+				j++;
+			}
+			free(args);
+			fprintf(stderr, "%s\n", "Error");
+			exit(2);
+		}
+	char *spath = shellpath(args[0]);
 
-	if (strcmp(args[0], "exit") == 0)
+	if (spath == NULL)
 	{
+		perror("command not found");
 		for (i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);
-		exit(0);
+		return;
 	}
-
 	pid = fork();
-
 	if (pid == -1)
 	{
 		perror("Error: ");
@@ -32,10 +42,9 @@ void command(char **args)
 		free(args);
 		return;
 	}
-
 	if (pid == 0)
 	{
-		execve(args[0], args, NULL);
+		execve(spath, args, NULL);
 		perror("Error");
 		if (strcmp(args[j - 1], "exit") == 0)
 			exit(2);
@@ -44,6 +53,7 @@ void command(char **args)
 	else
 	{
 		wait(&status);
+		free(spath);
 		for (i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);
@@ -61,6 +71,7 @@ int main(void)
 	while (1)
 	{
 		char **wordstr = bunchwords(interactive);
+		int i = 0;
 
 		if (wordstr == NULL)
 		{
@@ -72,6 +83,16 @@ int main(void)
 		{
 			free(wordstr);
 			continue;
+		}
+		if (strcmp(wordstr[0], "exit") == 0)
+		{
+			while (wordstr[i])
+			{
+				free(wordstr[i]);
+				i++;
+			}
+			free(wordstr);
+			break;
 		}
 
 		command(wordstr);
