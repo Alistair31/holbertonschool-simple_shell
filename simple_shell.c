@@ -27,7 +27,7 @@ void command(char **args)
 	spath = shellpath(args[0]);
 	if (spath == NULL)
 	{
-		perror("command not found");
+		fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
 		for (i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);
@@ -45,10 +45,11 @@ void command(char **args)
 	if (pid == 0)
 	{
 		execve(spath, args, NULL);
-		perror("Error");
-		if (strcmp(args[j - 1], "exit") == 0)
-			exit(2);
-		exit(1);
+		if (errno == ENOENT)
+			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+		else
+			perror("./hsh");
+		exit(errno == ENOENT ? 127 : 126);
 	}
 	else
 	{

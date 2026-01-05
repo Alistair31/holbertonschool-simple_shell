@@ -7,6 +7,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <errno.h>
+
 
 char *shellpath(char *cmd);
 char **split_words(char *str);
