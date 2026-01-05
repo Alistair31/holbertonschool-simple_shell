@@ -1,80 +1,57 @@
 #include "man.h"
 
 /**
- * command - executes a command
- * @args: array of arguments
- *
- * Return: void
- */
-void command(char **args)
-{
-	pid_t pid;
-	int status, i, j = 0;
-
-	while (args[j])
-		j++;
-
-	if (strcmp(args[0], "exit") == 0)
-	{
-		for (i = 0; args[i]; i++)
-			free(args[i]);
-		free(args);
-		exit(0);
-	}
-
-	pid = fork();
-
-	if (pid == -1)
-	{
-		perror("Error: ");
-		for (i = 0; args[i]; i++)
-			free(args[i]);
-		free(args);
-		return;
-	}
-
-	if (pid == 0)
-	{
-		execve(args[0], args, NULL);
-		perror("Error");
-		if (strcmp(args[j - 1], "exit") == 0)
-			exit(2);
-		exit(1);
-	}
-	else
-	{
-		wait(&status);
-		for (i = 0; args[i]; i++)
-			free(args[i]);
-		free(args);
-	}
-}
-/**
  * main - entry point for the simple shell
+ * @ac: argument count
+ * @av: argument vector
+ * @envp: environment variables
  *
  * Return: 0 on success
  */
-int main(void)
+int main(int ac, char **av, char **envp)
 {
 	int interactive = isatty(STDIN_FILENO);
+	char **wordstr, **_env;
+	int status;
+
+	(void)ac;
+	(void)av;
+
+	_env = makeenv(envp);
+	if (!_env)
+		return (EXIT_FAILURE);
 
 	while (1)
 	{
-		char **wordstr = bunchwords(interactive);
-
-		if (wordstr == NULL)
+		wordstr = bunchwords(interactive);
+		if (!wordstr)
 		{
-			printf("\n");
-			break;
-		}
-
-		if (wordstr[0] == NULL)
-		{
-			free(wordstr);
+			if (feof(stdin))
+			{
+				if (interactive)
+					printf("\n");
+				break;
+			}
 			continue;
 		}
 
-		command(wordstr);
+		status = _builtin(wordstr, _env);
+
+		if (status == -1)
+		{
+			free_args(wordstr);
+			break;
+		}
+
+		if (status == 1)
+		{
+			free_args(wordstr);
+			continue;
+		}
+
+		findcmd(wordstr, _env);
+		free_args(wordstr);
 	}
+	free_args(_env);
 	return (0);
 }

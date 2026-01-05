@@ -7,27 +7,33 @@
  */
 char **split_words(char *str)
 {
-	char **arstr = NULL;
-	char *tmp = NULL;
-	int i, j = 0, words = 0;
+	char **arstr;
+	char *token;
+	int i = 0;
 
-	for (i = 0; str[i]; i++)
-	{
-		if (str[i] == ' ')
-			words++;
-	}
+	if (!str)
+		return (NULL);
 
-	arstr = malloc(sizeof(char *) * (words + 2));
+	arstr = malloc(sizeof(char *) * (strlen(str) + 1));
 	if (!arstr)
 		return (NULL);
 
-	tmp = strtok(str, " ");
-	while (tmp)
+	token = strtok(str, " \t\n");
+	while (token)
 	{
-		arstr[j++] = strdup(tmp);
-		tmp = strtok(NULL, " ");
+		arstr[i] = _strdup(token);
+		if (!arstr[i])
+		{
+			while (i > 0)
+			{
+				free(arstr[--i]);
+			}
+			free(arstr);
+			return (NULL);
+		}
+		i++;
+		token = strtok(NULL, " \t\n");
 	}
-	arstr[j] = NULL;
-
+	arstr[i] = NULL;
 	return (arstr);
 }

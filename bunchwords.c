@@ -13,30 +13,25 @@ char **bunchwords(int interactive)
 	char **args;
 
 	if (interactive)
+	{
 		printf("$ ");
+		fflush(stdout);
+	}
 
 	nread = getline(&str, &line, stdin);
-
 	if (nread == -1)
 	{
 		free(str);
 		return (NULL);
 	}
 
-	if (str[nread - 1] == '\n')
+	if (nread > 0 && str[nread - 1] == '\n')
 		str[nread - 1] = '\0';
 
-	if (str[0] == '\0')
+	if (*str == '\0')
 	{
-		args = malloc(sizeof(char *));
-		if (!args)
-		{
-			free(str);
-			return (NULL);
-		}
-		args[0] = NULL;
 		free(str);
-		return (args);
+		return (NULL);
 	}
 
 	args = split_words(str);
