@@ -75,7 +75,8 @@ int main(void)
 
 		if (wordstr == NULL)
 		{
-			printf("\n");
+			if (interactive)
+				printf("\n");
 			break;
 		}
 
