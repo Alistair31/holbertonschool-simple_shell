@@ -10,6 +10,7 @@ void command(char **args)
 {
 	pid_t pid;
 	int status, i, j = 0;
+	char *spath;
 
 	for (i = 0; args[i]; i++)
 		if (strcmp(args[i], "exit") == 0)
@@ -23,8 +24,7 @@ void command(char **args)
 			fprintf(stderr, "%s\n", "Error");
 			exit(2);
 		}
-	char *spath = shellpath(args[0]);
-
+	spath = shellpath(args[0]);
 	if (spath == NULL)
 	{
 		perror("command not found");
