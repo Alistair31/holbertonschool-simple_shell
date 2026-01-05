@@ -1,6 +1,18 @@
 #include "man.h"
 
 /**
+ * free_args - free the list of arguments
+ * @args: argument to free
+ */
+void free_args(char **args)
+{
+	int k;
+
+	for (k = 0; args[k]; k++)
+		free(args[k]);
+	free(args);
+}
+/**
  * command - executes a command
  * @args: array of arguments
  *
@@ -28,36 +40,28 @@ void command(char **args)
 	if (spath == NULL)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-		for (i = 0; args[i]; i++)
-			free(args[i]);
-		free(args);
+		free_args(args);
 		return;
 	}
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("Error: ");
-		for (i = 0; args[i]; i++)
-			free(args[i]);
-		free(args);
-		return;
+		free_args(args);
+		exit(127);
 	}
 	if (pid == 0)
 	{
 		execve(spath, args, NULL);
-		if (errno == ENOENT)
-			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-		else
-			perror("./hsh");
-		exit(errno == ENOENT ? 127 : 126);
+		fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+		free(spath);
+		exit(127);
 	}
 	else
 	{
 		wait(&status);
 		free(spath);
-		for (i = 0; args[i]; i++)
-			free(args[i]);
-		free(args);
+		free_args(args);
 	}
 }
 /**
