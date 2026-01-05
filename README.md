@@ -18,7 +18,7 @@
   </p>
   
   <!-- Demo GIF -->
-  <img src="demo.gif" alt="Demo" width="600">
+  <img src="demo.gif" alt="Demo" width="1000">
 </div>
 <!-- TABLE OF CONTENTS -->
 <details>
