@@ -24,6 +24,7 @@ void command(char **args, char **_env)
 	if (pid == 0)
 	{
 		execve(args[0], args, _env);
+		fprintf(stderr, "./hsh: %s: not found\n", args[0]);
 		perror(args[0]);
 		exit(1);
 	}
