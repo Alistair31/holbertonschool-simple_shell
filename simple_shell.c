@@ -26,13 +26,9 @@ int main(int ac, char **av, char **envp)
 		wordstr = bunchwords(interactive);
 		if (!wordstr)
 		{
-			if (feof(stdin))
-			{
-				if (interactive)
-					printf("\n");
-				break;
-			}
-			continue;
+			if (interactive)
+				printf("\n");
+			break;
 		}
 
 		status = _builtin(wordstr, _env);
