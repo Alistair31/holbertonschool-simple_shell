@@ -110,7 +110,7 @@ char *is_direct_executable(const char *path)
 	if (!path || !path[0])
 		return (NULL);
 
-	if (path[0] == '/' || (path[0] == '.' && path[1] == '/'))
+	if ((path[0] == '.' || (path[1] == '/' || (path[1] == '.' && path[2] == '/'))))
 	{
 		if (access(path, X_OK) == 0)
 			return (_strdup(path));
