@@ -11,7 +11,7 @@
 
 char *shellpath(char *cmd);
 char **split_words(char *str);
-char **bunchwords(int interactive);
+char **split_line(int interactive);
 void findcmd(char **args, char **_env);
 void command(char **args, char **_env);
 char *get_path(char **_env);

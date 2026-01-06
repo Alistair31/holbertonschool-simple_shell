@@ -23,7 +23,7 @@ int main(int ac, char **av, char **envp)
 
 	while (1)
 	{
-		wordstr = bunchwords(interactive);
+		wordstr = split_line(interactive);
 		if (!wordstr)
 		{
 			if (interactive)

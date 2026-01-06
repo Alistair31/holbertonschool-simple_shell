@@ -1,5 +1,4 @@
 #include "man.h"
-#include "man.h"
 
 /**
  * build_fullpath - constructs a full path from dir + command
