@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Alistair/holbertonschool-simple_shell">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src=".images/.logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h1>Simple Shell</h1>
@@ -16,6 +16,7 @@
     <a href="https://github.com/Alistair31/holbertonschool-simple_shell/graphs/contributors"><img src="https://img.shields.io/github/contributors/Alistair31/holbertonschool-simple_shell.svg?style=for-the-badge" alt="Contributors"></a>
     <a href="https://github.com/Alistair31"><img src="https://img.shields.io/badge/github-Alistair31-blue?logo=github&style=for-the-badge"></a>
   </p>
+  <img src=".images/.demo.gif" alt="Demo" width="1000">
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -75,7 +76,8 @@ This section shows the high-level control flow and how user input becomes a runn
 
 ```mermaid
 flowchart TD
-    Start((Start)) --> CheckTTY[Detect interactive mode]
+    Start((Start))
+    Start --> CheckTTY[Detect interactive mode]
     CheckTTY --> LoopStart[[Shell loop start]]
 
     LoopStart --> PromptCheck{Interactive mode}
@@ -83,14 +85,14 @@ flowchart TD
     PromptCheck -- No --> SkipPrompt[Skip prompt]
 
     ShowPrompt --> ReadLine[Read line from stdin]
-    SkipPrompt --> ReadLine[Read line from stdin]
+    SkipPrompt --> ReadLine
 
     ReadLine --> EOFCheck{EOF or read error}
-    EOFCheck -- Yes --> EOFExit[Print newline and exit loop]
+    EOFCheck -- Yes --> EOFExit[If interactive print newline]
     EOFExit --> End((Exit shell))
-    EOFCheck -- No --> EmptyLineCheck{Line empty after trimming newline}
 
-    EmptyLineCheck -- Yes --> IgnoreEmpty[Free buffer and continue]
+    EOFCheck -- No --> EmptyLineCheck{Line empty after trimming newline}
+    EmptyLineCheck -- Yes --> IgnoreEmpty[Ignore and continue loop]
     IgnoreEmpty --> LoopStart
 
     EmptyLineCheck -- No --> Tokenize[Split line into argument array]
@@ -98,27 +100,26 @@ flowchart TD
     FirstArgCheck -- No --> FreeEmptyArgs[Free empty array]
     FreeEmptyArgs --> LoopStart
 
-    FirstArgCheck -- Yes --> BuiltinExitCheck{First argument is exit}
-    BuiltinExitCheck -- Yes --> FreeExitArgs[Free args and exit shell]
-    FreeExitArgs --> End
+    FirstArgCheck -- Yes --> BuiltinCheck{Is built in command}
+    BuiltinCheck -- Yes --> RunBuiltin[Run env or exit]
+    RunBuiltin --> ExitRequested{Builtin requested exit}
+    ExitRequested -- Yes --> End
+    ExitRequested -- No --> LoopStart
 
-    BuiltinExitCheck -- No --> ResolvePath[Call shellpath to resolve command]
-    ResolvePath --> PathFound{Executable path found}
-    PathFound -- No --> PathError[Print error and free args]
-    PathError --> LoopStart
+    BuiltinCheck -- No --> FindCmd[Call findcmd helper]
+    FindCmd --> DirectPathCheck{handle path executes}
+    DirectPathCheck -- Yes --> ExecDirect[command runs direct executable]
+    DirectPathCheck -- No --> SearchPath[search path and maybe execute]
 
-    PathFound -- Yes --> ForkCall[Call fork]
-    ForkCall --> ForkFailed{Fork failed}
-    ForkFailed -- Yes --> ForkError[Print error and free resources]
-    ForkError --> LoopStart
+    SearchPath --> PathFound{Executable found in path}
+    PathFound -- No --> PrintNotFound[Print command not found]
+    PrintNotFound --> LoopStart
 
-    ForkFailed -- No --> InChildOrParent{Child or parent process}
-    InChildOrParent -- Child --> ExecCmd[Child calls execve]
-    ExecCmd --> ExecFail[On failure, print error and terminate child]
+    PathFound -- Yes --> ExecResolved[command runs resolved path]
 
-    InChildOrParent -- Parent --> WaitChild[Parent waits for child to finish]
-    WaitChild --> CleanupParent[Free resolved path and args]
-    CleanupParent --> LoopStart
+    ExecDirect --> WaitChild[Parent waits for child]
+    ExecResolved --> WaitChild
+    WaitChild --> LoopStart
 ```
 
 - The main loop reads user input, handles interactive prompts, and detects EOF.
