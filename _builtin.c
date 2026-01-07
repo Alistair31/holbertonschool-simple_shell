@@ -27,6 +27,7 @@ int _builtin(char **args, char **_env)
 int builtin_exit(char **args)
 {
 	(void)args;
+	exit(last_status);
 	return (-1);
 }
 /**

@@ -10,6 +10,7 @@
 void command(char **args, char **_env)
 {
 	pid_t pid;
+	int status;
 
 	pid = fork();
 	if (pid == 0)
@@ -18,8 +19,10 @@ void command(char **args, char **_env)
 		perror(args[0]);
 		exit(126);
 	}
-	else
+	else if (pid > 0)
 	{
-		wait(NULL);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			last_status = WEXITSTATUS(status);
 	}
 }
