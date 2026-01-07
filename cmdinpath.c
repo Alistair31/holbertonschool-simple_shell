@@ -44,7 +44,6 @@ char *find_executable_in_path(const char *cmd, char **_env)
 	path_dup = _strdup(_path);
 	if (!path_dup)
 	{
-		perror("strdup");
 		return (NULL);
 	}
 
@@ -54,7 +53,6 @@ char *find_executable_in_path(const char *cmd, char **_env)
 		fullpath = build_fullpath(dir, cmd);
 		if (!fullpath)
 		{
-			perror("malloc");
 			break;
 		}
 
@@ -73,31 +71,28 @@ char *find_executable_in_path(const char *cmd, char **_env)
 }
 
 /**
- * search_path - searches for a command in PATH and executes it
+ * search_path - searches for command in PATH and executes it
  * @args: array of command arguments
  * @_env: environment variables
+ *
+ * Return: 1 if command was found and executed, 0 otherwise
  */
-void search_path(char **args, char **_env)
+int search_path(char **args, char **_env)
 {
 	char *fullpath, *old;
 
-	if (!args || !args[0])
-		return;
-
 	fullpath = find_executable_in_path(args[0], _env);
-	if (fullpath)
-	{
-		old = args[0];
-		args[0] = fullpath;
-		command(args, _env);
-		args[0] = old;
-		free(fullpath);
-	}
-	else
-	{
-		fprintf(stderr, "%s: command not found\n", args[0]);
-	}
+	if (!fullpath)
+		return (0);
+
+	old = args[0];
+	args[0] = fullpath;
+	command(args, _env);
+	args[0] = old;
+	free(fullpath);
+	return (1);
 }
+
 /**
  * is_direct_executable - checks if a path is a direct executable
  * @path: path string
@@ -113,7 +108,6 @@ char *is_direct_executable(const char *path)
 	{
 		if (access(path, X_OK) == 0)
 			return (_strdup(path));
-		perror(path);
 	}
 	if (path[0] == '.')
 	{
@@ -121,13 +115,11 @@ char *is_direct_executable(const char *path)
 		{
 			if (access(path, X_OK) == 0)
 				return (_strdup(path));
-			perror(path);
 		}
 		else if (path[1] == '.' && path[2] == '/')
 		{
 			if (access(path, X_OK) == 0)
 				return (_strdup(path));
-			perror(path);
 		}
 	}
 	return (NULL);
