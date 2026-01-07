@@ -210,14 +210,14 @@ On your own terminal you can use in a non interactive way this simple shell.
 Type echo "executable" | ./simple_shell and it would execute it without entering in the simple shell
 
 ```bash
-username@hostname:/# echo "/bin/ls" | ./hsh
-hsh main.c shell.c test_ls_2
+username@hostname:/# echo "/bin/ls" | ./simple_shell
+simple_shell main.c shell.c test_ls_2
 username@hostname:/# cat test_ls_2
 /bin/ls
 /bin/ls
-username@hostname:/# cat test_ls_2 | ./hsh
-hsh main.c shell.c test_ls_2
-hsh main.c shell.c test_ls_2
+username@hostname:/# cat test_ls_2 | ./simple_shell
+simple_shell main.c shell.c test_ls_2
+simple_shell main.c shell.c test_ls_2
 username@hostname:/#
 ```
 

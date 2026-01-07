@@ -8,7 +8,7 @@
 ----------------------------------------------
 .fi
 .SH DESCRIPTION
-The simple shell (-------) is a rebuild of a simplified version of the shell.
+The simple shell is a rebuild of a simplified version of the shell.
 It work as a command language interpreter that can execute commands read from a
 command line string, the standard input, or a specified file.
 Commands are natives from the standard shell and will be called from the same
@@ -16,11 +16,11 @@ path.
 
 .SH OPERATION
 In interactive mode,
-.B myshell
+.B simple_shell
 displays a prompt and waits for the user to enter a command.
 In non-interactive mode, it reads commands from standard input.
 
-The shell performs the following steps:
+The simple_shell performs the following steps:
 .IP \(bu 2
 Reads a command line
 .IP \(bu 2
@@ -49,7 +49,7 @@ Display the current environment variables.
 Interactive mode:
 .PP
 .RS
-$ ./hsh
+$ ./simple_shell
 .br
 $ ls -l
 .br
@@ -60,9 +60,9 @@ $ exit
 Non-interactive mode:
 .PP
 .RS
-$ echo "ls -l" | ./hsh
+$ echo "ls -l" | ./simple_shell
 .br
-$ ./hsh < commands.txt
+$ ./simple_shell < commands.txt
 .RE
 
 .SH EXIT STATUS
@@ -89,7 +89,7 @@ arguments.
 .RE
 
 .RS
-126		Command invoked cannot execute:
+126		Command called cannot execute:
 The command was found but could not be run, often due to
 insufficient permissions or a non-executable file.
 .RE
