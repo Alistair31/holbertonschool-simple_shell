@@ -4,10 +4,9 @@
 <br />
 <div align="center">
   <a href="https://github.com/Alistair/holbertonschool-simple_shell">
-    <img src=".images/.logo.png" alt="Logo" width="80" height="80">
+    <img src=".images/.logo.png" alt="Logo" width="400" height="400">
   </a>
 
-  <h1>Simple Shell</h1>
   <p>A minimal Unix-like shell written in C that reads commands, resolves paths, and executes programs.</p>
 
   <!-- BADGES -->
@@ -61,12 +60,16 @@ This shell relies on standard POSIX APIs and a C toolchain. You can build and ru
 
 This table lists core files and their responsibilities. Each file encapsulates a focused part of the shell behavior.
 
-| File           | Key Function  | Description                                             |
-| -------------- | ------------- | ------------------------------------------------------- |
-| `simple_shell.c` | `main`, `command` | Entry point; reads input and handles command execution |
-| `bunchwords.c`   | `bunchwords`      | Reads a line, prompts user, and returns token array     |
-| `split_words.c`  | `split_words`     | Splits a string into individual words                   |
-| `shellpath.c`    | `shellpath`       | Searches standard paths to locate executable commands   |
+| File              | Key Functions                    | Description                                   |
+|-------------------|----------------------------------|-----------------------------------------------|
+| `findpath_cmd.c`  | `findcmd`, `get_path`            | Finds and dispatches commands via path logic  |
+| `command.c`       | `command`                        | Forks and executes given commands             |
+| `cmdinpath.c`     | Path building, search, execution | Resolves commands in PATH, handles direct exec|
+| `_builtin.c`      | `_builtin`, `builtin_exit/env`   | Implements built-in commands                  |
+| `man.h`           | Prototypes, includes             | Main project header                           |
+| `splitwords.c`    | `split_words`, `split_line`      | Tokenizes user input                          |
+| `utils.c`         | `makeenv`, `free_args`, `_strdup`| Utility for memory and string ops             |
+| `simple_shell.c`  | `main`                           | Entry point and main shell loop               |
 
 <p align="right">(<a href="#simple-shell">back to top</a>)</p>
 
