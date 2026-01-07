@@ -1,0 +1,118 @@
+.TH SIMPLE_SHELL 3
+.SH NAME
+
+.SH SYNOPSIS
+.nf
+#include "man.h"
+
+----------------------------------------------
+.fi
+.SH DESCRIPTION
+The simple shell (-------) is a rebuild of a simplified version of the shell.
+It work as a command language interpreter that can execute commands read from a
+command line string, the standard input, or a specified file.
+Commands are natives from the standard shell and will be called from the same
+path.
+
+.SH OPERATION
+In interactive mode,
+.B myshell
+displays a prompt and waits for the user to enter a command.
+In non-interactive mode, it reads commands from standard input.
+
+The shell performs the following steps:
+.IP \(bu 2
+Reads a command line
+.IP \(bu 2
+Splits the line into tokens
+.IP \(bu 2
+Executes a built-in command if recognized
+.IP \(bu 2
+Otherwise searches for and executes an external program
+.IP \(bu 2
+Repeats until EOF or an exit command is issued
+
+.SH BUILTINS
+The following built-in commands are supported:
+
+.TP
+.B exit
+Exit the shell
+
+.TP
+.B env
+Display the current environment variables.
+
+.SH USAGE
+
+.PP
+Interactive mode:
+.PP
+.RS
+$ ./hsh
+.br
+$ ls -l
+.br
+$ exit
+.RE
+
+.PP
+Non-interactive mode:
+.PP
+.RS
+$ echo "ls -l" | ./hsh
+.br
+$ ./hsh < commands.txt
+.RE
+
+.SH EXIT STATUS
+
+.pp
+The following exit codes are commonly returned by POSIX-compliant
+commands and shells:
+.PP
+
+.RS
+0		Successful completion:
+The command executed without errors.
+.RE
+
+.RS
+1		General error:
+A non-specific failure occurred.
+.RE
+
+.RS
+2		Misuse of shell builtins:
+Indicates incorrect usage such as invalid syntax or missing
+arguments.
+.RE
+
+.RS
+126		Command invoked cannot execute:
+The command was found but could not be run, often due to
+insufficient permissions or a non-executable file.
+.RE
+
+.RS
+127		Command not found:
+The specified command could not be located, typically due to
+a typo or an incorrect PATH.
+.RE
+
+.SH PATH
+Specifies the directories searched for executable commands.
+
+.SH ENVIRONMENT
+Environment variables are copied at startup and may be modified using
+the built-in commands.
+
+.SH AUTHORS
+Written by ASSANI Andric and MERLIERE Gabriel as part of a learning project in C programming.
+
+.SH SEE ALSO
+.BR sh (1),
+.BR bash (1),
+.BR execve (2),
+.BR fork (2),
+.BR wait (2)
