@@ -19,7 +19,7 @@ char *find_executable_in_path(const char *cmd, char **_env);
 char *is_direct_executable(const char *path);
 char *build_fullpath(const char *dir, const char *cmd);
 int handle_path(char **args, char **_env);
-void search_path(char **args, char **_env);
+int search_path(char **args, char **_env);
 int _builtin(char **args, char **_env);
 void free_args(char **args);
 int builtin_exit(char **args);

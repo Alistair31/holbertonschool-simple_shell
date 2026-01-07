@@ -73,11 +73,6 @@ char **split_line(int interactive)
 		{
 			continue;
 		}
-
-		if (*str == EOF)
-		{
-			break;
-		}
 		args = split_words(str);
 		free(str);
 		return (args);

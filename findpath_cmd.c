@@ -10,12 +10,27 @@
  */
 void findcmd(char **args, char **_env)
 {
+	pid_t pid;
+
 	if (!args || !args[0])
 		return;
 
 	if (handle_path(args, _env))
 		return;
-	search_path(args, _env);
+
+	if (search_path(args, _env))
+		return;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+		exit(127);
+	}
+	else if (pid > 0)
+	{
+		wait(NULL);
+	}
 }
 
 /**
