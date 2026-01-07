@@ -1,4 +1,4 @@
-<a name="readme-top"></a>
+<a id="readme-top"></a>
 
 <!-- PROJECT LOGO -->
 <br />
@@ -25,26 +25,25 @@
     <li><a href="#about-the-project">About The Project</a>
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#component-summary">Component Summary</a></li>
-    <li><a href="#flowchart">Flowchart</a></l
-    <li><a href="#getting-started">Getting Started</a>
+    <li><a href="#flowchart">Flowchart</a></l>
+    <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#installation">Installation</a></li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
-<u>## About The Project
+<h2><u>About The Project</u></h2>
 
 The simple shell is a minimal Unix-like shell in C. It reads user input, resolves executable paths, and spawns processes to run commands.  
 The shell supports a small subset of POSIX shell behavior, focused on process creation and simple argument handling.  
 The implementation is intentionally compact and educational. It is suitable for learning how shells interact with the operating system via `fork`, `execve`, and related system calls.
 
-<p align="right">(<a href="#simple-shell">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<u>## Built With
+<h2><u>Built With</u></h2>
 
 <div align="center">
   
@@ -54,9 +53,9 @@ The implementation is intentionally compact and educational. It is suitable for 
 </div>
 This shell relies on standard POSIX APIs and a C toolchain. You can build and run it on most Unix-like systems.  
 
-<p align="right">(<a href="#simple-shell">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<u>## Component Summary
+<h2><u>Component Summary</u></h2>
 
 This table lists core files and their responsibilities. Each file encapsulates a focused part of the shell behavior.
 
@@ -71,9 +70,9 @@ This table lists core files and their responsibilities. Each file encapsulates a
 | `utils.c`         | `makeenv`, `free_args`, `_strdup`| Utility for memory and string ops             |
 | `simple_shell.c`  | `main`                           | Entry point and main shell loop               |
 
-<p align="right">(<a href="#simple-shell">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<u>## Flowchart
+<h2><u>Flowchart</u></h2>
 
 This section shows the high-level control flow and how user input becomes a running process. The flowchart highlights input handling, built-in commands, error paths, and cleanup.
 
@@ -130,14 +129,14 @@ flowchart TD
 - The `exit` token is treated as a built-in and terminates the shell.
 - External commands go through path resolution, forking, execution, waiting, and cleanup.
 
-<p align="right">(<a href="#simple-shell">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
-<u>## Getting Started
+<h2><u>Getting Started</u></h2>
 
 This section explains how to set up the simple shell locally. You will clone the repository, build the binary with a C compiler, and run it from your terminal.
 
-<u>### Prerequisites</u>
+<h2><u>Prerequisites</u></h2>
 
 You need a POSIX-like environment and a working C toolchain. Most Linux distributions and macOS systems already provide what you need.
 
@@ -150,9 +149,9 @@ You need a POSIX-like environment and a working C toolchain. Most Linux distribu
 - Standard build tools and headers for your platform.
 - A terminal emulator and basic command-line familiarity. We used VScode
 
-<p align="right">(<a href="#simple-shell">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<u>### Installation
+<h2><u>Installation</u></h2>
 
 Follow these steps to download, compile, and run the shell. All commands should run in your terminal.
 
@@ -181,10 +180,10 @@ Follow these steps to download, compile, and run the shell. All commands should 
    export PATH="$PWD:$PATH"
    ```
 
-<p align="right">(<a href="#simple-shell">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
-## Usage
+<h2><u>Usage</u></h2>
 
 This shell reads commands from standard input, resolves their paths, and executes them in child processes. It supports both interactive and non-interactive modes.
 
@@ -203,35 +202,42 @@ $ echo Hello world
 Hello world
 $ exit
 ```
-<img src="interactive_test.gif" alt="interactive" width="1000">
+<img src=".image/.interactive_test.gif" alt="interactive" width="1000">
 
 Example of non interactive test:
 
 On your own terminal you can use in a non interactive way this simple shell.  
 Type echo "executable" | ./simple_shell and it would execute it without entering in the simple shell
 
-<img src="non_interactive_test.gif" alt="non_interactive" width="1000">
+```bash
+username@hostname:/# echo "/bin/ls" | ./hsh
+hsh main.c shell.c test_ls_2
+username@hostname:/# cat test_ls_2
+/bin/ls
+/bin/ls
+username@hostname:/# cat test_ls_2 | ./hsh
+hsh main.c shell.c test_ls_2
+hsh main.c shell.c test_ls_2
+username@hostname:/#
+```
+
+<img src="image/.non_interactive_test.gif" alt="non_interactive" width="1000">
 
 As you can see it can execute some command 
 
 For a visual overview of the runtime behavior, refer to the detailed flowchart in the [Flowchart](#flowchart) section. That diagram shows how the shell handles prompts, input lines, built-ins, external commands, and errors.
 
-<p align="right">(<a href="#simple-shell">back to top</a>)</p>
-
-<!-- ROADMAP -->
-## Roadmap
-
-<p align="right">(<a href="#simple-shell">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
-## Contact
+<h2><u>Contact</u></h2>
 
 See AUTHOR.TXT file  
 
-<p align="right">(<a href="#simple-shell">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+<h2><u>Acknowledgments</u></h2>
 
 Use this section to credit resources or people that helped the project. You can list tutorials, documentation, or mentors here.
 
