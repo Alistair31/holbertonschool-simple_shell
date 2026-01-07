@@ -15,7 +15,6 @@
     <a href="https://github.com/Alistair31/holbertonschool-simple_shell/graphs/contributors"><img src="https://img.shields.io/github/contributors/Alistair31/holbertonschool-simple_shell.svg?style=for-the-badge" alt="Contributors"></a>
     <a href="https://github.com/Alistair31"><img src="https://img.shields.io/badge/github-Alistair31-blue?logo=github&style=for-the-badge"></a>
   </p>
-  <img src=".images/.demo.gif" alt="Demo" width="1000">
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -63,7 +62,7 @@ This table lists core files and their responsibilities. Each file encapsulates a
 |-------------------|----------------------------------|-----------------------------------------------|
 | `findpath_cmd.c`  | `findcmd`, `get_path`            | Finds and dispatches commands via path logic  |
 | `command.c`       | `command`                        | Forks and executes given commands             |
-| `cmdinpath.c`     | Path building, search, execution | Resolves commands in PATH, handles direct exec|
+| `cmdinpath.c`     | Path building, search, execution | Resolves commands in PATH, handles direct execution|
 | `_builtin.c`      | `_builtin`, `builtin_exit/env`   | Implements built-in commands                  |
 | `man.h`           | Prototypes, includes             | Main project header                           |
 | `splitwords.c`    | `split_words`, `split_line`      | Tokenizes user input                          |
@@ -74,7 +73,7 @@ This table lists core files and their responsibilities. Each file encapsulates a
 
 <h2><u>Flowchart</u></h2>
 
-This section shows the high-level control flow and how user input becomes a running process. The flowchart highlights input handling, built-in commands, error paths, and cleanup.
+This section shows the control flow and how user input becomes a running process. The flowchart highlights input handling, built-in commands, error paths, and cleanup.
 
 ```mermaid
 flowchart TD
