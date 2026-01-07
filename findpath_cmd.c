@@ -20,7 +20,7 @@ void findcmd(char **args, char **_env)
 		return;
 
 	fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-	exit(127);
+	last_status = 127;
 }
 
 /**

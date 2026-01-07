@@ -1,4 +1,5 @@
 #include "man.h"
+int last_status = 0;
 
 /**
  * main - entry point for the simple shell
@@ -49,5 +50,6 @@ int main(int ac, char **av, char **envp)
 		free_args(wordstr);
 	}
 	free_args(_env);
+	exit(last_status);
 	return (0);
 }

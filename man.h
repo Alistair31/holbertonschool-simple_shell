@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <errno.h>
 
+extern int last_status;
 
 char *shellpath(char *cmd);
 char **split_words(char *str);
