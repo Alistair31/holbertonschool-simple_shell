@@ -238,7 +238,7 @@ See AUTHOR.TXT file
 <!-- ACKNOWLEDGMENTS -->
 <h2><u>Acknowledgments</u></h2>
 
-Use this section to credit resources or people that helped the project. You can list tutorials, documentation, or mentors here.
+this is the resources that helped the project. We used :
 
 - [![Mermaid](https://img.shields.io/badge/Mermaid-ff4f81?style=for-the-badge)](https://mermaid.js.org/)&nbsp;&nbsp;&nbsp;&nbsp;For the [Flowchart](#flowchart) diagram
 - [![Asciinema](https://img.shields.io/badge/Asciinema-000000?style=for-the-badge&logo=asciinema&logoColor=red)](https://asciinema.org/)&nbsp;&nbsp;&nbsp;&nbsp;For the demo (GIFs) in the [Usage](#usage) section
