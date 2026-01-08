@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Alistair/holbertonschool-simple_shell">
+  <a href="https://github.com/Alistair31/holbertonschool-simple_shell">
     <img src=".images/.logo.png" alt="Logo" width="400" height="400">
   </a>
 
