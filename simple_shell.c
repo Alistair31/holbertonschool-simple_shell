@@ -14,7 +14,6 @@ int main(int ac, char **av, char **envp)
 	char **wordstr, **_env;
 	int status, last_status;
 	(void)ac;
-	(void)av;
 
 	last_status = 0;
 	_env = makeenv(envp);
@@ -41,7 +40,7 @@ int main(int ac, char **av, char **envp)
 			free_args(wordstr);
 			continue;
 		}
-		last_status = findcmd(wordstr, _env, last_status);
+		last_status = findcmd(wordstr, _env, last_status, av[0]);
 		free_args(wordstr);
 	}
 	free_args(_env);

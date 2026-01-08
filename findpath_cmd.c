@@ -11,7 +11,7 @@
  *
  * Return: exit status of the command execution, or 127 if not found
  */
-int findcmd(char **args, char **_env, int last_status)
+int findcmd(char **args, char **_env, int last_status, char *cmdname)
 {
 	int status;
 
@@ -25,7 +25,7 @@ int findcmd(char **args, char **_env, int last_status)
 	if (status != -1)
 		return (status);
 
-	fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+	fprintf(stderr, "%s: 1: %s: not found\n", cmdname, args[0]);
 	return (127);
 }
 
