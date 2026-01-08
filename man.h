@@ -10,8 +10,8 @@
 
 char **split_words(char *str);
 char **split_line(int interactive);
-int findcmd(char **args, char **_env, int last_status);
-void command(char **args, char **_env);
+int findcmd(char **args, char **_env);
+int command(char **args, char **_env);
 char *get_path(char **_env);
 char *find_executable_in_path(const char *cmd, char **_env);
 char *is_direct_executable(const char *path);

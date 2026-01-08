@@ -9,31 +9,24 @@
  * This function first checks if the command is a direct executable path.
  * If not, it searches for the command in the PATH environment variable.
  *
- * Return: exit status of the command execution
+ * Return: exit status of the command execution, or 127 if not found
  */
-int findcmd(char **args, char **_env, int last_status)
+int findcmd(char **args, char **_env)
 {
+	int status;
+
 	if (!args || !args[0])
 		return (1);
 
-	last_status = handle_path(args, _env);
-	if (last_status)
-	{
-		last_status = search_path(args, _env);
-		if (last_status)
-		{
-			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-			return (last_status);
-		}
-		else
-		{
-			return (last_status);
-		}
-	}
-	else
-	{
-		return (last_status);
-	}
+	status = handle_path(args, _env);
+	if (status != -1)
+		return (status);
+	status = search_path(args, _env);
+	if (status != -1)
+		return (status);
+
+	fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+	return (127);
 }
 
 /**

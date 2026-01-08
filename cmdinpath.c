@@ -75,22 +75,26 @@ char *find_executable_in_path(const char *cmd, char **_env)
  * @args: array of command arguments
  * @_env: environment variables
  *
- * Return: 0 if command was found and executed, 1 otherwise
+ * Return: exit status of the command, or -1 if not found/executed
  */
 int search_path(char **args, char **_env)
 {
 	char *fullpath, *old;
+	int status;
+
+	if (!args || !args[0])
+		return (-1);
 
 	fullpath = find_executable_in_path(args[0], _env);
 	if (!fullpath)
-		return (1);
+		return (-1);
 
 	old = args[0];
 	args[0] = fullpath;
-	command(args, _env);
+	status = command(args, _env);
 	args[0] = old;
 	free(fullpath);
-	return (0);
+	return (status);
 }
 
 /**
@@ -130,25 +134,24 @@ char *is_direct_executable(const char *path)
  * @args: array of command arguments
  * @_env: environment variables
  *
- * Return: 0 if command was executed, 1 otherwise
+ * Return: exit status of the command, or -1 if not found/executed
  */
 int handle_path(char **args, char **_env)
 {
 	char *fullpath, *old;
+	int status;
 
 	if (!args || !args[0])
-		return (0);
+		return (-1);
 
 	fullpath = is_direct_executable(args[0]);
-	if (fullpath)
-	{
-		old = args[0];
-		args[0] = fullpath;
-		command(args, _env);
-		args[0] = old;
-		free(fullpath);
-		return (0);
-	}
+	if (!fullpath)
+		return (-1);
 
-	return (1);
+	old = args[0];
+	args[0] = fullpath;
+	status = command(args, _env);
+	args[0] = old;
+	free(fullpath);
+	return (status);
 }

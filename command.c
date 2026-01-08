@@ -5,9 +5,9 @@
  * @args: array of arguments
  * @_env: environment variables
  *
- * Return: void
+ * Return: exit status of the command
  */
-void command(char **args, char **_env)
+int command(char **args, char **_env)
 {
 	pid_t pid;
 	int status;
@@ -22,5 +22,7 @@ void command(char **args, char **_env)
 	else if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
+		return (status >> 8);
 	}
+	return (1);
 }
