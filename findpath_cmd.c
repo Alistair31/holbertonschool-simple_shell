@@ -16,7 +16,7 @@ int findcmd(char **args, char **_env, int last_status)
 	int status;
 
 	if (!args || !args[0])
-		return (1);
+		return (last_status);
 
 	status = handle_path(args, _env);
 	if (status != -1)
