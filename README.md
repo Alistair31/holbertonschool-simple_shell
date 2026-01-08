@@ -196,7 +196,7 @@ Example interactive session:
 ```bash
 ./simple_shell
 $ ls
-simple_shell  simple_shell.c  shellpath.c  bunchwords.c  split_words.c
+AUTHORS  README.md  _builtin.c  cmdinpath.c  command.c  findpath_cmd.c  man.h  man_1_simple_shell  simple_shell.c  splitwords.c  utils.c
 $ echo Hello world
 Hello world
 $ exit
