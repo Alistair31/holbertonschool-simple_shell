@@ -75,7 +75,7 @@ char *find_executable_in_path(const char *cmd, char **_env)
  * @args: array of command arguments
  * @_env: environment variables
  *
- * Return: 1 if command was found and executed, 0 otherwise
+ * Return: 0 if command was found and executed, 1 otherwise
  */
 int search_path(char **args, char **_env)
 {
@@ -130,7 +130,7 @@ char *is_direct_executable(const char *path)
  * @args: array of command arguments
  * @_env: environment variables
  *
- * Return: 1 if command was executed, 0 otherwise
+ * Return: 0 if command was executed, 1 otherwise
  */
 int handle_path(char **args, char **_env)
 {
