@@ -22,7 +22,5 @@ void command(char **args, char **_env)
 	else if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			last_status = WEXITSTATUS(status);
 	}
 }

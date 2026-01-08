@@ -83,14 +83,14 @@ int search_path(char **args, char **_env)
 
 	fullpath = find_executable_in_path(args[0], _env);
 	if (!fullpath)
-		return (0);
+		return (1);
 
 	old = args[0];
 	args[0] = fullpath;
 	command(args, _env);
 	args[0] = old;
 	free(fullpath);
-	return (1);
+	return (0);
 }
 
 /**
@@ -147,8 +147,8 @@ int handle_path(char **args, char **_env)
 		command(args, _env);
 		args[0] = old;
 		free(fullpath);
-		return (1);
+		return (0);
 	}
 
-	return (0);
+	return (1);
 }
