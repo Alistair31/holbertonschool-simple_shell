@@ -16,13 +16,13 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 
-	last_status = 0;
 	_env = makeenv(envp);
 	if (!_env)
 		return (EXIT_FAILURE);
 
 	while (1)
 	{
+		last_status = 0;
 		wordstr = split_line(interactive);
 		if (!wordstr)
 		{
