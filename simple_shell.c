@@ -45,8 +45,6 @@ int main(int ac, char **av, char **envp)
 		free_args(wordstr);
 	}
 	free_args(_env);
-	if (last_status == 1)
-		last_status = 127;
 	/*printf("%d", last_status);*/ /*verify the exit status*/
 	exit(last_status);
 	return (0);
