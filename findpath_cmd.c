@@ -4,13 +4,14 @@
  * findcmd - finds and executes a command
  * @args: array of command arguments
  * @_env: environment variables
+ * @last_status: last command exit status
  *
  * This function first checks if the command is a direct executable path.
  * If not, it searches for the command in the PATH environment variable.
  *
  * Return: exit status of the command execution, or 127 if not found
  */
-int findcmd(char **args, char **_env)
+int findcmd(char **args, char **_env, int last_status)
 {
 	int status;
 

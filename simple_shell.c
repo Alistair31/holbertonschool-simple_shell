@@ -41,7 +41,7 @@ int main(int ac, char **av, char **envp)
 			free_args(wordstr);
 			continue;
 		}
-		last_status = findcmd(wordstr, _env);
+		last_status = findcmd(wordstr, _env, last_status);
 		free_args(wordstr);
 	}
 	free_args(_env);
