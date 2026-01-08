@@ -76,51 +76,41 @@ This table lists core files and their responsibilities.
 This section shows the control flow and how user input becomes a running process. The flowchart highlights input handling, built-in commands, error paths, and cleanup.
 
 ```mermaid
-flowchart TD
-    Start((Start))
-    Start --> CheckTTY[Detect interactive mode]
-    CheckTTY --> LoopStart[[Shell loop start]]
-
-    LoopStart --> PromptCheck{Interactive mode}
-    PromptCheck -- Yes --> ShowPrompt[Print prompt]
-    PromptCheck -- No --> SkipPrompt[Skip prompt]
-
-    ShowPrompt --> ReadLine[Read line from stdin]
+flowchart TB
+    Start(("Start")) --> CheckTTY["Detect interactive mode"]
+    CheckTTY --> LoopStart[["Shell loop start"]]
+    LoopStart --> PromptCheck{"Interactive mode"}
+    PromptCheck -- Yes --> ShowPrompt["Print prompt"]
+    PromptCheck -- No --> SkipPrompt["Skip prompt"]
+    ShowPrompt --> ReadLine["Read line from stdin"]
     SkipPrompt --> ReadLine
-
-    ReadLine --> EOFCheck{EOF or read error}
-    EOFCheck -- Yes --> EOFExit[If interactive print newline]
-    EOFExit --> End((Exit shell))
-
-    EOFCheck -- No --> EmptyLineCheck{Line empty after trimming newline}
-    EmptyLineCheck -- Yes --> IgnoreEmpty[Ignore and continue loop]
-    IgnoreEmpty --> LoopStart
-
-    EmptyLineCheck -- No --> Tokenize[Split line into argument array]
-    Tokenize --> FirstArgCheck{First argument exists}
-    FirstArgCheck -- No --> FreeEmptyArgs[Free empty array]
-    FreeEmptyArgs --> LoopStart
-
-    FirstArgCheck -- Yes --> BuiltinCheck{Is built in command}
-    BuiltinCheck -- Yes --> RunBuiltin[Run env or exit]
-    RunBuiltin --> ExitRequested{Builtin requested exit}
+    ReadLine --> EOFCheck{"EOF or read error"}
+    EOFCheck -- Yes --> EOFExit["If interactive print newline"]
+    EOFExit --> End(("Exit shell"))
+    EOFCheck -- No --> EmptyLineCheck{"Line empty after trimming newline"}
+    EmptyLineCheck -- Yes --> IgnoreEmpty["Ignore and continue loop"]
+    EmptyLineCheck -- No --> Tokenize["Split line into argument array"]
+    Tokenize --> FirstArgCheck{"First argument exists"}
+    FirstArgCheck -- No --> FreeEmptyArgs["Free empty array"]
+    FreeEmptyArgs --> n4(("A"))
+    FirstArgCheck -- Yes --> BuiltinCheck{"Is built in command"}
+    BuiltinCheck -- Yes --> RunBuiltin["Run env or exit"]
+    RunBuiltin --> ExitRequested{"Builtin requested exit"}
     ExitRequested -- Yes --> End
-    ExitRequested -- No --> LoopStart
-
-    BuiltinCheck -- No --> FindCmd[Call findcmd helper]
-    FindCmd --> DirectPathCheck{handle path executes}
-    DirectPathCheck -- Yes --> ExecDirect[command runs direct executable]
-    DirectPathCheck -- No --> SearchPath[search path and maybe execute]
-
-    SearchPath --> PathFound{Executable found in path}
-    PathFound -- No --> PrintNotFound[Print command not found]
-    PrintNotFound --> LoopStart
-
-    PathFound -- Yes --> ExecResolved[command runs resolved path]
-
-    ExecDirect --> WaitChild[Parent waits for child]
-    ExecResolved --> WaitChild
-    WaitChild --> LoopStart
+    BuiltinCheck -- No --> FindCmd["Call findcmd helper"]
+    FindCmd --> DirectPathCheck{"handle path executes"}
+    DirectPathCheck -- Yes --> ExecDirect["command runs direct executable"]
+    DirectPathCheck -- No --> SearchPath["search path and maybe execute"]
+    SearchPath --> PathFound{"Executable found in path"}
+    PathFound -- yes --> PrintNotFound["command runs resolved path"]
+    PathFound -- no --> ExecResolved["Print command not found"]
+    ExecDirect --> WaitChild["Parent waits for child"]
+    ExecResolved --> n5(("A"))
+    WaitChild --> n6(("A"))
+    n1(("A")) --> LoopStart
+    IgnoreEmpty --> n2(("A"))
+    ExitRequested --> n3(("A"))
+    PrintNotFound --> WaitChild
 ```
 
 - The main loop reads user input, handles interactive prompts, and detects EOF.
