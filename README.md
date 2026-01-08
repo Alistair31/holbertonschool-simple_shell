@@ -38,7 +38,7 @@
 
 The simple shell is a minimal Unix-like shell in C. It reads user input, resolves executable paths, and spawns processes to run commands.  
 The shell supports a small subset of POSIX shell behavior, focused on process creation and simple argument handling.  
-The implementation is intentionally compact and educational. It is suitable for learning how shells interact with the operating system via `fork`, `execve`, and related system calls.
+This project is made for learning how shells interact with the operating system via `fork`, `execve`, and related system calls.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -56,7 +56,7 @@ This shell relies on standard POSIX APIs and a C toolchain. You can build and ru
 
 <h2><u>Component Summary</u></h2>
 
-This table lists core files and their responsibilities. Each file encapsulates a focused part of the shell behavior.
+This table lists core files and their responsibilities.
 
 | File              | Key Functions                    | Description                                   |
 |-------------------|----------------------------------|-----------------------------------------------|
@@ -224,7 +224,7 @@ username@hostname:/#
 
 As you can see it can execute some command 
 
-For a visual overview of the runtime behavior, refer to the detailed flowchart in the [Flowchart](#flowchart) section. That diagram shows how the shell handles prompts, input lines, built-ins, external commands, and errors.
+If you want to see the global behavior, refer to the detailed flowchart in the [Flowchart](#flowchart) section. That diagram shows how the shell handles prompts, input lines, built-ins, external commands, and errors.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -238,7 +238,7 @@ See AUTHOR.TXT file
 <!-- ACKNOWLEDGMENTS -->
 <h2><u>Acknowledgments</u></h2>
 
-this is the resources that helped the project. We used :
+this is the resources we used for building this README file:
 
 - [![Mermaid](https://img.shields.io/badge/Mermaid-ff4f81?style=for-the-badge)](https://mermaid.js.org/)&nbsp;&nbsp;&nbsp;&nbsp;For the [Flowchart](#flowchart) diagram
 - [![Asciinema](https://img.shields.io/badge/Asciinema-000000?style=for-the-badge&logo=asciinema&logoColor=red)](https://asciinema.org/)&nbsp;&nbsp;&nbsp;&nbsp;For the demo (GIFs) in the [Usage](#usage) section
