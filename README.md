@@ -201,7 +201,7 @@ $ echo Hello world
 Hello world
 $ exit
 ```
-<img src=".image/.interactive_test.gif" alt="interactive" width="1000">
+<img src=".images/.interactive_test.gif" alt="interactive" width="1000">
 
 Example of non interactive test:
 
@@ -220,7 +220,7 @@ simple_shell main.c shell.c test_ls_2
 username@hostname:/#
 ```
 
-<img src="image/.non_interactive_test.gif" alt="non_interactive" width="1000">
+<img src=".images/.non_interactive_test.gif" alt="non_interactive" width="1000">
 
 As you can see it can execute some command 
 
